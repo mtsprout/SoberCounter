@@ -144,12 +144,20 @@ private fun SoberApp() {
         var menuOpen by remember { mutableStateOf(false) }
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             Text(
-                "SOBRIETY TRACKER", color = Color.White, fontSize = 22.sp, fontWeight = FontWeight.Bold,
-                fontStyle = FontStyle.Italic, letterSpacing = 4.sp, modifier = Modifier.weight(1f),
+                "SOBRIETY TRACKER", color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.Bold,
+                fontStyle = FontStyle.Italic, letterSpacing = 2.sp, maxLines = 1, modifier = Modifier.weight(1f),
                 style = TextStyle(shadow = Shadow(Color.White.copy(alpha = 0.5f), blurRadius = 14f)),
             )
+            if (start != null) {
+                IconButton(onClick = { shareElapsed(context, elapsed(start!!, LocalDateTime.now())) }, modifier = Modifier.size(40.dp)) {
+                    Icon(
+                        painterResource(R.drawable.ic_share), contentDescription = "Share",
+                        tint = NeonMagenta, modifier = Modifier.size(24.dp),
+                    )
+                }
+            }
             Box {
-                IconButton(onClick = { menuOpen = true }) {
+                IconButton(onClick = { menuOpen = true }, modifier = Modifier.size(40.dp)) {
                     Icon(
                         painterResource(R.drawable.ic_settings), contentDescription = "Settings",
                         tint = NeonCyan, modifier = Modifier.size(28.dp),

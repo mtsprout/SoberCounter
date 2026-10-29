@@ -14,21 +14,31 @@ data class Elapsed(
 
 fun elapsed(start: LocalDateTime, now: LocalDateTime): Elapsed {
     if (!now.isAfter(start)) return Elapsed(0, 0, 0, 0, 0f, 0f, 0f, 0f)
-    val years = ChronoUnit.YEARS.between(start, now)
-    var cur = start.plusYears(years)
-    val months = ChronoUnit.MONTHS.between(cur, now)
-    val monthStart = cur.plusMonths(months)
-    cur = monthStart
-    val days = ChronoUnit.DAYS.between(cur, now)
-    cur = cur.plusDays(days)
+
+    // ChronoUnit.between and plusYears/plusMonths disagree around Feb 29 and month ends
+    // (Feb 29 + 1 year clamps to Feb 28), so settle each count with the same plus operation we
+    // later use for boundaries. That keeps every fraction within 0..1.
+    var years = ChronoUnit.YEARS.between(start, now)
+    while (start.plusYears(years).isAfter(now)) years--
+    while (!start.plusYears(years + 1).isAfter(now)) years++
+    val yearBase = start.plusYears(years)
+
+    var months = ChronoUnit.MONTHS.between(yearBase, now)
+    while (yearBase.plusMonths(months).isAfter(now)) months--
+    while (!yearBase.plusMonths(months + 1).isAfter(now)) months++
+    val monthStart = yearBase.plusMonths(months)
+    val monthEnd = yearBase.plusMonths(months + 1)
+
+    val days = ChronoUnit.DAYS.between(monthStart, now)
+    var cur = monthStart.plusDays(days)
     val hours = ChronoUnit.HOURS.between(cur, now)
     cur = cur.plusHours(hours)
     val secIntoHour = ChronoUnit.SECONDS.between(cur, now).toFloat()
 
     val hourFrac = secIntoHour / 3600f
     val dayFrac = (hours + hourFrac) / 24f
-    val monthLen = ChronoUnit.DAYS.between(monthStart, monthStart.plusMonths(1)).toFloat()
-    val monthFrac = (days + dayFrac) / monthLen
-    val yearFrac = (months + monthFrac) / 12f
+    val monthLen = ChronoUnit.DAYS.between(monthStart, monthEnd).toFloat()
+    val monthFrac = ((days + dayFrac) / monthLen).coerceIn(0f, 1f)
+    val yearFrac = ((months + monthFrac) / 12f).coerceIn(0f, 1f)
     return Elapsed(years, months, days, hours, yearFrac, monthFrac, dayFrac, hourFrac)
 }
