@@ -48,6 +48,7 @@ First release of Sobriety Tracker.
 - Feature graphic 1024x500: `graphics/feature-graphic-1024x500.png`
 - Phone screenshots 1080x1920: `screenshots/phone-1.png` to `phone-4.png`
   (made from demo data; no personal information)
+- Tablet screenshots 1600x2200: `screenshots/tablet-1.png` to `tablet-3.png`. Captured from the real app at a 10-inch display size (1600x2560); upload the same files for both the 7-inch and 10-inch slots.
 
 ## Data safety form
 - Does the app collect or share any required user data types? **No** (all data stays on the device).

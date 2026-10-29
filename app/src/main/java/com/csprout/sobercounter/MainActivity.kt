@@ -17,6 +17,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -132,13 +133,15 @@ private fun SoberApp() {
         }, base.year, base.monthValue - 1, base.dayOfMonth).show()
     }
 
+    // Keep the content column phone-width and centred so tablets don't get stretched bars.
+    BoxWithConstraints(Modifier.fillMaxSize().background(Color.Black)) {
+    val side = maxOf(20.dp, (maxWidth - 600.dp) / 2)
     Column(
         Modifier
             .fillMaxSize()
-            .background(Color.Black)
             .statusBarsPadding()
             .verticalScroll(rememberScrollState())
-            .padding(20.dp),
+            .padding(horizontal = side, vertical = 20.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
         var menuOpen by remember { mutableStateOf(false) }
@@ -222,6 +225,7 @@ private fun SoberApp() {
             sponsorName = sponsorName, sponsorPhone = sponsorPhone,
             onSetSponsor = { showSponsor = true },
         )
+    }
     }
 
     if (showSponsor) {
