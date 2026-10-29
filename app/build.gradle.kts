@@ -1,7 +1,15 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.compose")
+}
+
+// Release signing comes from the git-ignored local.properties (RELEASE_STORE_FILE, RELEASE_STORE_PASSWORD,
+// RELEASE_KEY_ALIAS, RELEASE_KEY_PASSWORD). Without them the release build is simply left unsigned.
+val localProps = Properties().apply {
+    rootProject.file("local.properties").takeIf { it.exists() }?.inputStream()?.use { load(it) }
 }
 
 android {
@@ -13,12 +21,26 @@ android {
         minSdk = 26
         targetSdk = 35
         versionCode = 1
-        versionName = "0.9.0"
+        versionName = "1.0.0"
+    }
+
+    signingConfigs {
+        if (localProps.getProperty("RELEASE_STORE_FILE") != null) {
+            create("release") {
+                storeFile = file(localProps.getProperty("RELEASE_STORE_FILE"))
+                storePassword = localProps.getProperty("RELEASE_STORE_PASSWORD")
+                keyAlias = localProps.getProperty("RELEASE_KEY_ALIAS")
+                keyPassword = localProps.getProperty("RELEASE_KEY_PASSWORD")
+            }
+        }
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfigs.findByName("release")?.let { signingConfig = it }
         }
     }
     compileOptions {
