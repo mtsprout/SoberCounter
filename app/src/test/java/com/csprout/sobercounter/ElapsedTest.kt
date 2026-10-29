@@ -24,6 +24,16 @@ class ElapsedTest {
         assertFracs(e)
     }
 
+    @Test fun barsFillWithinTheirLargerCycle() {
+        // 1y 2m 7d 21h 30m since the start: hours bar is 21.5/24 full, not near empty.
+        val e = elapsed(at(2025, 8, 22, 12), at(2026, 10, 29, 9, 30))
+        assertEquals(21L, e.hours)
+        assertEquals(21.5f / 24f, e.hourFrac, 0.01f)
+        assertTrue(e.dayFrac in 0.2f..0.3f)   // ~6.9 of 31 days
+        assertTrue(e.monthFrac in 0.1f..0.2f) // ~2.2 of 12 months
+        assertTrue(e.yearFrac in 0.2f..0.3f)  // ~1.2 of 5 years
+    }
+
     @Test fun leapDayStartBeforeAnniversary() {
         val e = elapsed(at(2024, 2, 29), at(2025, 2, 27, 23, 59))
         assertEquals(0L, e.years)

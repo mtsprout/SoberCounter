@@ -4,8 +4,9 @@ import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
 
 /**
- * Calendar-accurate elapsed time. Each *Frac is how far through the current
- * unit we are (0..1), used to fill that unit's bar.
+ * Calendar-accurate elapsed time. Each *Frac is how full that unit's bar should be (0..1), measured
+ * within its larger cycle: hours out of the day, days out of the month, months out of the year, and
+ * years out of the next 5-year mark.
  */
 data class Elapsed(
     val years: Long, val months: Long, val days: Long, val hours: Long,
@@ -35,10 +36,12 @@ fun elapsed(start: LocalDateTime, now: LocalDateTime): Elapsed {
     cur = cur.plusHours(hours)
     val secIntoHour = ChronoUnit.SECONDS.between(cur, now).toFloat()
 
-    val hourFrac = secIntoHour / 3600f
-    val dayFrac = (hours + hourFrac) / 24f
+    val minuteFrac = secIntoHour / 3600f
+    val hoursFrac = (hours + minuteFrac) / 24f
     val monthLen = ChronoUnit.DAYS.between(monthStart, monthEnd).toFloat()
-    val monthFrac = ((days + dayFrac) / monthLen).coerceIn(0f, 1f)
-    val yearFrac = ((months + monthFrac) / 12f).coerceIn(0f, 1f)
-    return Elapsed(years, months, days, hours, yearFrac, monthFrac, dayFrac, hourFrac)
+    val daysFrac = ((days + hoursFrac) / monthLen).coerceIn(0f, 1f)
+    val monthsFrac = ((months + daysFrac) / 12f).coerceIn(0f, 1f)
+    val nextMark = (years / 5 + 1) * 5
+    val yearsFrac = ((years + monthsFrac) / nextMark).coerceIn(0f, 1f)
+    return Elapsed(years, months, days, hours, yearsFrac, monthsFrac, daysFrac, hoursFrac)
 }
