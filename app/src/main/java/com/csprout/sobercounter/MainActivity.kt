@@ -414,7 +414,7 @@ private fun ResourceChips(sponsorName: String, sponsorPhone: String, onSetSponso
             ResourceChip("+ Add sponsor", NeonGreen, onSetSponsor)
         } else {
             val link = ResourceLink(sponsorName.ifBlank { "Sponsor" }, "tel:" + Uri.encode(sponsorPhone), NeonGreen, dial = true)
-            ResourceChip("☎ " + link.label, NeonGreen) { open(context, link) }
+            ResourceChip("🚨 " + link.label, NeonGreen) { open(context, link) }
         }
         ResourceLinks.forEach { link -> ResourceChip(link.label, link.color) { open(context, link) } }
     }
