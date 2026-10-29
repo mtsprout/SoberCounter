@@ -51,6 +51,14 @@ class Store(context: Context) {
             prefs.edit().putString(KEY_GOALS, arr.toString()).apply()
         }
 
+    var sponsorName: String
+        get() = prefs.getString(KEY_SPONSOR_NAME, "") ?: ""
+        set(value) { prefs.edit().putString(KEY_SPONSOR_NAME, value).apply() }
+
+    var sponsorPhone: String
+        get() = prefs.getString(KEY_SPONSOR_PHONE, "") ?: ""
+        set(value) { prefs.edit().putString(KEY_SPONSOR_PHONE, value).apply() }
+
     fun addGoal(amount: Int, unit: GoalUnit) {
         goals = goals + Goal(Random.nextInt(1, Int.MAX_VALUE), amount, unit)
     }
@@ -62,5 +70,7 @@ class Store(context: Context) {
     private companion object {
         const val KEY_START = "start"
         const val KEY_GOALS = "goals"
+        const val KEY_SPONSOR_NAME = "sponsor_name"
+        const val KEY_SPONSOR_PHONE = "sponsor_phone"
     }
 }
