@@ -5,7 +5,7 @@
 - **Package / applicationId:** io.github.mtsprout.sobercounter
 - **Category:** Health & Fitness
 - **Tags:** Health & Fitness, Lifestyle (pick what the console offers)
-- **Contact email:** [CONTACT EMAIL]
+- **Contact email:** sobercounter@gmail.com
 - **Privacy policy URL:** https://github.com/mtsprout/SoberCounter/blob/main/PRIVACY.md
 - **Target audience:** 18 and over
 

@@ -46,4 +46,4 @@ If this policy changes, the updated version will be posted at the same address w
 
 ## Contact
 
-Questions about this policy: [CONTACT EMAIL]
+Questions about this policy: sobercounter@gmail.com
