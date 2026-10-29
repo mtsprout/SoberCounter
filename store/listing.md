@@ -31,6 +31,18 @@ No accounts. No ads. No tracking. No data leaves your phone. The app asks only f
 
 Sobriety Tracker is a counter, not medical advice or treatment. It is not affiliated with or endorsed by AA, NA, SMART Recovery, SAMHSA or any other organization listed. If you are in crisis, call or text 988 (US).
 
+## What's new (500 max, v1.0.0)
+```
+First release of Sobriety Tracker.
+
+- Live neon bars for years, months, days and hours since your sobriety date
+- Set your own goals and get a notification when you reach each one
+- Progress meter toward your next goal
+- One-tap links to AA, NA, SMART Recovery, SAMHSA and 988, plus your sponsor's number
+- Share your progress as an image
+- No accounts, no ads, no data leaves your phone
+```
+
 ## Graphics (this folder)
 - App icon 512x512: `graphics/icon-512.png`
 - Feature graphic 1024x500: `graphics/feature-graphic-1024x500.png`
