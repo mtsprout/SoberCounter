@@ -109,6 +109,7 @@ private fun SoberApp() {
 
     val notifPermission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {}
     LaunchedEffect(Unit) {
+        GoalScheduler.scheduleAll(context) // re-arm in case alarms were lost (force-stop, update)
         if (Build.VERSION.SDK_INT >= 33) notifPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
         while (true) {
             now = LocalDateTime.now()
