@@ -6,7 +6,7 @@
 - **Category:** Health & Fitness
 - **Tags:** Health & Fitness, Lifestyle (pick what the console offers)
 - **Contact email:** [CONTACT EMAIL]
-- **Privacy policy URL:** [PUBLIC URL OF PRIVACY.md]
+- **Privacy policy URL:** https://github.com/mtsprout/SoberCounter/blob/main/PRIVACY.md
 - **Target audience:** 18 and over
 
 ## Short description (80 max)
