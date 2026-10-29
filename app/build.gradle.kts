@@ -9,7 +9,7 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.csprout.sobercounter"
+        applicationId = "io.github.mtsprout.sobercounter"
         minSdk = 26
         targetSdk = 35
         versionCode = 1
