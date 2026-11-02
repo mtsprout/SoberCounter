@@ -36,6 +36,11 @@ android {
     }
 
     buildTypes {
+        // Sign debug with the same key as release (when configured) so a debug build and a release build can
+        // replace each other on a device without an uninstall, which would wipe the app's data.
+        debug {
+            signingConfigs.findByName("release")?.let { signingConfig = it }
+        }
         release {
             isMinifyEnabled = true
             isShrinkResources = true
